@@ -23,7 +23,7 @@ use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 
 final class ProvinceNamingProviderTest extends TestCase
 {
-    /** @var RepositoryInterface&MockObject */
+    /** @var RepositoryInterface<ProvinceInterface>&MockObject */
     private MockObject $provinceRepositoryMock;
 
     private ProvinceNamingProvider $provinceNamingProvider;

@@ -23,7 +23,7 @@ use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 
 final class ZoneDeletionCheckerTest extends TestCase
 {
-    /** @var RepositoryInterface&MockObject */
+    /** @var RepositoryInterface<ZoneMemberInterface>&MockObject */
     private MockObject $zoneMemberRepositoryMock;
 
     private ZoneDeletionChecker $zoneDeletionChecker;

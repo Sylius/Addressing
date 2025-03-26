@@ -23,7 +23,7 @@ use Sylius\Component\Addressing\Repository\ZoneRepositoryInterface;
 
 final class ZoneMatcherTest extends TestCase
 {
-    /** @var ZoneRepositoryInterface&MockObject */
+    /** @var ZoneRepositoryInterface<ZoneInterface>&MockObject */
     private MockObject $zoneRepositoryMock;
 
     private ZoneMatcher $zoneMatcher;

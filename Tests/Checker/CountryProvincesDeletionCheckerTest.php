@@ -25,10 +25,10 @@ use Sylius\Resource\Doctrine\Persistence\RepositoryInterface;
 
 final class CountryProvincesDeletionCheckerTest extends TestCase
 {
-    /** @var RepositoryInterface&MockObject */
+    /** @var RepositoryInterface<ZoneMemberInterface>&MockObject */
     private MockObject $zoneMemberRepositoryMock;
 
-    /** @var RepositoryInterface&MockObject */
+    /** @var RepositoryInterface<ProvinceInterface>&MockObject */
     private MockObject $provinceRepositoryMock;
 
     private CountryProvincesDeletionChecker $countryProvincesDeletionChecker;

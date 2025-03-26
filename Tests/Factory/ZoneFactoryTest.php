@@ -23,12 +23,13 @@ use Sylius\Resource\Factory\FactoryInterface;
 
 final class ZoneFactoryTest extends TestCase
 {
-    /** @var FactoryInterface&MockObject */
+    /** @var FactoryInterface<ZoneInterface>&MockObject */
     private MockObject $factoryMock;
 
-    /** @var FactoryInterface&MockObject */
+    /** @var FactoryInterface<ZoneMemberInterface>&MockObject */
     private MockObject $zoneMemberFactoryMock;
 
+    /** @var ZoneFactory<ZoneInterface> */
     private ZoneFactory $zoneFactory;
 
     protected function setUp(): void
