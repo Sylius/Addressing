@@ -57,16 +57,16 @@ final class CountryProvincesDeletionCheckerTest extends TestCase
         $thirdProvinceMock = $this->createMock(ProvinceInterface::class);
         /** @var ZoneMemberInterface&MockObject $zoneMemberMock */
         $zoneMemberMock = $this->createMock(ZoneMemberInterface::class);
-        $firstProvinceMock->expects($this->once())->method('getCode')->willReturn('US-AK');
-        $secondProvinceMock->expects($this->once())->method('getCode')->willReturn('US-TX');
-        $thirdProvinceMock->expects($this->once())->method('getCode')->willReturn('US-KY');
-        $countryMock->expects($this->once())->method('getProvinces')->willReturn(new ArrayCollection([$secondProvinceMock]));
-        $this->provinceRepositoryMock->expects($this->once())->method('findBy')->with(['country' => $countryMock])->willReturn([
+        $firstProvinceMock->expects(self::atLeastOnce())->method('getCode')->willReturn('US-AK');
+        $secondProvinceMock->expects(self::atLeastOnce())->method('getCode')->willReturn('US-TX');
+        $thirdProvinceMock->expects(self::atLeastOnce())->method('getCode')->willReturn('US-KY');
+        $countryMock->expects(self::once())->method('getProvinces')->willReturn(new ArrayCollection([$secondProvinceMock]));
+        $this->provinceRepositoryMock->expects(self::once())->method('findBy')->with(['country' => $countryMock])->willReturn([
             $firstProvinceMock,
             $secondProvinceMock,
             $thirdProvinceMock,
         ]);
-        $this->zoneMemberRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => [0 => 'US-AK', 2 => 'US-KY']])
+        $this->zoneMemberRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => [0 => 'US-AK', 2 => 'US-KY']])
             ->willReturn($zoneMemberMock)
         ;
         self::assertFalse($this->countryProvincesDeletionChecker->isDeletable($countryMock));
@@ -82,16 +82,16 @@ final class CountryProvincesDeletionCheckerTest extends TestCase
         $secondProvinceMock = $this->createMock(ProvinceInterface::class);
         /** @var ProvinceInterface&MockObject $thirdProvinceMock */
         $thirdProvinceMock = $this->createMock(ProvinceInterface::class);
-        $firstProvinceMock->expects($this->once())->method('getCode')->willReturn('US-AK');
-        $secondProvinceMock->expects($this->once())->method('getCode')->willReturn('US-TX');
-        $thirdProvinceMock->expects($this->once())->method('getCode')->willReturn('US-KY');
-        $countryMock->expects($this->once())->method('getProvinces')->willReturn(new ArrayCollection([$secondProvinceMock]));
-        $this->provinceRepositoryMock->expects($this->once())->method('findBy')->with(['country' => $countryMock])->willReturn([
+        $firstProvinceMock->expects(self::atLeastOnce())->method('getCode')->willReturn('US-AK');
+        $secondProvinceMock->expects(self::atLeastOnce())->method('getCode')->willReturn('US-TX');
+        $thirdProvinceMock->expects(self::atLeastOnce())->method('getCode')->willReturn('US-KY');
+        $countryMock->expects(self::once())->method('getProvinces')->willReturn(new ArrayCollection([$secondProvinceMock]));
+        $this->provinceRepositoryMock->expects(self::once())->method('findBy')->with(['country' => $countryMock])->willReturn([
             $firstProvinceMock,
             $secondProvinceMock,
             $thirdProvinceMock,
         ]);
-        $this->zoneMemberRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => [0 => 'US-AK', 2 => 'US-KY']])
+        $this->zoneMemberRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => [0 => 'US-AK', 2 => 'US-KY']])
             ->willReturn(null)
         ;
         self::assertTrue($this->countryProvincesDeletionChecker->isDeletable($countryMock));

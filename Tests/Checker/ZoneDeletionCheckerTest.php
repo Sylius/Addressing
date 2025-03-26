@@ -45,8 +45,8 @@ final class ZoneDeletionCheckerTest extends TestCase
         $zoneMock = $this->createMock(ZoneInterface::class);
         /** @var ZoneMemberInterface&MockObject $zoneMemberMock */
         $zoneMemberMock = $this->createMock(ZoneMemberInterface::class);
-        $zoneMock->expects($this->once())->method('getCode')->willReturn('US');
-        $this->zoneMemberRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => 'US'])->willReturn($zoneMemberMock);
+        $zoneMock->expects(self::once())->method('getCode')->willReturn('US');
+        $this->zoneMemberRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => 'US'])->willReturn($zoneMemberMock);
         self::assertFalse($this->zoneDeletionChecker->isDeletable($zoneMock));
     }
 
@@ -54,8 +54,8 @@ final class ZoneDeletionCheckerTest extends TestCase
     {
         /** @var ZoneInterface&MockObject $zoneMock */
         $zoneMock = $this->createMock(ZoneInterface::class);
-        $zoneMock->expects($this->once())->method('getCode')->willReturn('US');
-        $this->zoneMemberRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => 'US'])->willReturn(null);
+        $zoneMock->expects(self::once())->method('getCode')->willReturn('US');
+        $this->zoneMemberRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => 'US'])->willReturn(null);
         self::assertTrue($this->zoneDeletionChecker->isDeletable($zoneMock));
     }
 }

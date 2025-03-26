@@ -94,7 +94,7 @@ final class CountryTest extends TestCase
     {
         /** @var ProvinceInterface&MockObject $provinceMock */
         $provinceMock = $this->createMock(ProvinceInterface::class);
-        $provinceMock->expects($this->once())->method('setCountry')->with($this->country);
+        $provinceMock->expects(self::once())->method('setCountry')->with($this->country);
         $this->country->addProvince($provinceMock);
     }
 
@@ -104,7 +104,7 @@ final class CountryTest extends TestCase
         $provinceMock = $this->createMock(ProvinceInterface::class);
         $this->country->addProvince($provinceMock);
         self::assertTrue($this->country->hasProvince($provinceMock));
-        $provinceMock->expects($this->once())->method('setCountry')->with(null);
+        $provinceMock->expects(self::once())->method('setCountry')->with(null);
         $this->country->removeProvince($provinceMock);
     }
 

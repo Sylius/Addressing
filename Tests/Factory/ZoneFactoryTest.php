@@ -53,8 +53,8 @@ final class ZoneFactoryTest extends TestCase
     {
         /** @var ZoneInterface&MockObject $zoneMock */
         $zoneMock = $this->createMock(ZoneInterface::class);
-        $this->factoryMock->expects($this->once())->method('createNew')->willReturn($zoneMock);
-        $zoneMock->expects($this->once())->method('setType')->with('country');
+        $this->factoryMock->expects(self::once())->method('createNew')->willReturn($zoneMock);
+        $zoneMock->expects(self::once())->method('setType')->with('country');
         self::assertSame($zoneMock, $this->zoneFactory->createTyped('country'));
     }
 
@@ -66,10 +66,13 @@ final class ZoneFactoryTest extends TestCase
         $zoneMember1Mock = $this->createMock(ZoneMemberInterface::class);
         /** @var ZoneMemberInterface&MockObject $zoneMember2Mock */
         $zoneMember2Mock = $this->createMock(ZoneMemberInterface::class);
-        $this->factoryMock->expects($this->once())->method('createNew')->willReturn($zoneMock);
-        $this->zoneMemberFactoryMock->expects($this->once())->method('createNew')->willReturn($zoneMember1Mock, $zoneMember2Mock);
-        $zoneMember1Mock->expects($this->once())->method('setCode')->with('GB');
-        $zoneMember2Mock->expects($this->once())->method('setCode')->with('PL');
+        $this->factoryMock->expects(self::once())->method('createNew')->willReturn($zoneMock);
+        $this->zoneMemberFactoryMock
+            ->expects($this->exactly(2))
+            ->method('createNew')
+            ->willReturnOnConsecutiveCalls($zoneMember1Mock, $zoneMember2Mock);
+        $zoneMember1Mock->expects(self::once())->method('setCode')->with('GB');
+        $zoneMember2Mock->expects(self::once())->method('setCode')->with('PL');
         $zoneMock->expects($this->exactly(2))->method('addMember')->willReturnMap([[$zoneMember1Mock], [$zoneMember2Mock]]);
         self::assertSame($zoneMock, $this->zoneFactory->createWithMembers(['GB', 'PL']));
     }

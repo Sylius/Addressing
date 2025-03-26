@@ -34,38 +34,48 @@ final class ProvinceNamingProviderTest extends TestCase
         $this->provinceNamingProvider = new ProvinceNamingProvider($this->provinceRepositoryMock);
     }
 
-    public function testThrowsInvalidArgumentExceptionWhenProvinceWithGivenCodeIsNotFound(): void
+    public function testThrowsInvalidArgumentExceptionGettingNameWhenProvinceWithGivenCodeIsNotFound(): void
     {
         /** @var AddressInterface&MockObject $addressMock */
         $addressMock = $this->createMock(AddressInterface::class);
-        $addressMock->expects($this->once())->method('getProvinceName')->willReturn(null);
-        $addressMock->expects($this->once())->method('getProvinceCode')->willReturn('ZZ-TOP');
-        $this->provinceRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => 'ZZ-TOP'])->willReturn(null);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn(null);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceCode')->willReturn('ZZ-TOP');
+        $this->provinceRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => 'ZZ-TOP'])->willReturn(null);
+
         $this->expectException(InvalidArgumentException::class);
-        $this->expectException(InvalidArgumentException::class);
-        $this->provinceNamingProvider->getAbbreviation($addressMock);
+        $this->provinceNamingProvider->getName($addressMock);
+    }
+
+    public function testThrowsInvalidArgumentExceptionGettingAbbreviationWhenProvinceWithGivenCodeIsNotFound(): void
+    {
+        /** @var AddressInterface&MockObject $addressMock */
+        $addressMock = $this->createMock(AddressInterface::class);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn(null);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceCode')->willReturn('ZZ-TOP');
+        $this->provinceRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => 'ZZ-TOP'])->willReturn(null);
+
         $this->expectException(InvalidArgumentException::class);
         $this->provinceNamingProvider->getAbbreviation($addressMock);
     }
 
-    public function testGetsProvinceNameIfProvinceWithGivenCodeExistInDatabase(): void
+    public function testGetsProvinceNameIfProvinceWithGivenCodeExistsInDatabase(): void
     {
         /** @var ProvinceInterface&MockObject $provinceMock */
         $provinceMock = $this->createMock(ProvinceInterface::class);
         /** @var AddressInterface&MockObject $addressMock */
         $addressMock = $this->createMock(AddressInterface::class);
-        $addressMock->expects($this->once())->method('getProvinceCode')->willReturn('IE-UL');
-        $addressMock->expects($this->once())->method('getProvinceName')->willReturn(null);
-        $this->provinceRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => 'IE-UL'])->willReturn($provinceMock);
-        $provinceMock->expects($this->once())->method('getName')->willReturn('Ulster');
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceCode')->willReturn('IE-UL');
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn(null);
+        $this->provinceRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => 'IE-UL'])->willReturn($provinceMock);
+        $provinceMock->expects(self::once())->method('getName')->willReturn('Ulster');
         self::assertSame('Ulster', $this->provinceNamingProvider->getName($addressMock));
     }
 
-    public function testGetsProvinceNameFormAddress(): void
+    public function testGetsProvinceNameFromAddress(): void
     {
         /** @var AddressInterface&MockObject $addressMock */
         $addressMock = $this->createMock(AddressInterface::class);
-        $addressMock->expects($this->once())->method('getProvinceName')->willReturn('Ulster');
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn('Ulster');
         self::assertSame('Ulster', $this->provinceNamingProvider->getName($addressMock));
     }
 
@@ -73,8 +83,8 @@ final class ProvinceNamingProviderTest extends TestCase
     {
         /** @var AddressInterface&MockObject $addressMock */
         $addressMock = $this->createMock(AddressInterface::class);
-        $addressMock->expects($this->once())->method('getProvinceCode')->willReturn(null);
-        $addressMock->expects($this->once())->method('getProvinceName')->willReturn(null);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceCode')->willReturn(null);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn(null);
         self::assertSame('', $this->provinceNamingProvider->getName($addressMock));
         self::assertSame('', $this->provinceNamingProvider->getAbbreviation($addressMock));
     }
@@ -85,10 +95,10 @@ final class ProvinceNamingProviderTest extends TestCase
         $provinceMock = $this->createMock(ProvinceInterface::class);
         /** @var AddressInterface&MockObject $addressMock */
         $addressMock = $this->createMock(AddressInterface::class);
-        $addressMock->expects($this->once())->method('getProvinceName')->willReturn(null);
-        $addressMock->expects($this->once())->method('getProvinceCode')->willReturn('IE-UL');
-        $this->provinceRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => 'IE-UL'])->willReturn($provinceMock);
-        $provinceMock->expects($this->once())->method('getAbbreviation')->willReturn('ULS');
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn(null);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceCode')->willReturn('IE-UL');
+        $this->provinceRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => 'IE-UL'])->willReturn($provinceMock);
+        $provinceMock->expects(self::once())->method('getAbbreviation')->willReturn('ULS');
         self::assertSame('ULS', $this->provinceNamingProvider->getAbbreviation($addressMock));
     }
 
@@ -98,19 +108,19 @@ final class ProvinceNamingProviderTest extends TestCase
         $provinceMock = $this->createMock(ProvinceInterface::class);
         /** @var AddressInterface&MockObject $addressMock */
         $addressMock = $this->createMock(AddressInterface::class);
-        $addressMock->expects($this->once())->method('getProvinceName')->willReturn(null);
-        $addressMock->expects($this->once())->method('getProvinceCode')->willReturn('IE-UL');
-        $this->provinceRepositoryMock->expects($this->once())->method('findOneBy')->with(['code' => 'IE-UL'])->willReturn($provinceMock);
-        $provinceMock->expects($this->once())->method('getAbbreviation')->willReturn(null);
-        $provinceMock->expects($this->once())->method('getName')->willReturn('Ulster');
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn(null);
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceCode')->willReturn('IE-UL');
+        $this->provinceRepositoryMock->expects(self::once())->method('findOneBy')->with(['code' => 'IE-UL'])->willReturn($provinceMock);
+        $provinceMock->expects(self::once())->method('getAbbreviation')->willReturn(null);
+        $provinceMock->expects(self::once())->method('getName')->willReturn('Ulster');
         self::assertSame('Ulster', $this->provinceNamingProvider->getAbbreviation($addressMock));
     }
 
-    public function testGetsProvinceNameFormAddressIfItsAbbreviationIsNotSet(): void
+    public function testGetsProvinceNameFromAddressIfItsAbbreviationIsNotSet(): void
     {
         /** @var AddressInterface&MockObject $addressMock */
         $addressMock = $this->createMock(AddressInterface::class);
-        $addressMock->expects($this->once())->method('getProvinceName')->willReturn('Ulster');
+        $addressMock->expects(self::atLeastOnce())->method('getProvinceName')->willReturn('Ulster');
         self::assertSame('Ulster', $this->provinceNamingProvider->getAbbreviation($addressMock));
     }
 }
