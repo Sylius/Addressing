@@ -53,7 +53,7 @@ final class ZoneMatcherTest extends TestCase
         $this->zoneRepositoryMock
             ->expects(self::exactly(2))
             ->method('findOneByAddressAndType')
-            ->willReturnCallback(fn(AddressInterface $address, string $type, ?string $scope = null) => match ([$address, $type, $scope]) {
+            ->willReturnCallback(fn (AddressInterface $address, string $type, ?string $scope = null) => match ([$address, $type, $scope]) {
                 [$addressMock, ZoneInterface::TYPE_PROVINCE, null] => null,
                 [$addressMock, ZoneInterface::TYPE_COUNTRY, null] => $zoneMock,
                 default => throw new \UnhandledMatchError(),
@@ -70,7 +70,7 @@ final class ZoneMatcherTest extends TestCase
         $this->zoneRepositoryMock
             ->expects(self::exactly(3))
             ->method('findOneByAddressAndType')
-            ->willReturnCallback(fn(AddressInterface $address, string $type, ?string $scope = null) => match ([$address, $type, $scope]) {
+            ->willReturnCallback(fn (AddressInterface $address, string $type, ?string $scope = null) => match ([$address, $type, $scope]) {
                 [$addressMock, ZoneInterface::TYPE_PROVINCE, null],
                 [$addressMock, ZoneInterface::TYPE_COUNTRY, null] => null,
                 [$addressMock, ZoneInterface::TYPE_ZONE, null] => $zoneMock,
@@ -104,7 +104,7 @@ final class ZoneMatcherTest extends TestCase
         $this->zoneRepositoryMock
             ->expects(self::exactly(3))
             ->method('findByMembers')
-            ->willReturnCallback(fn(array $members) => match ($members) {
+            ->willReturnCallback(fn (array $members) => match ($members) {
                 [$zoneOneMock] => [$zoneTwoMock],
                 [$zoneTwoMock] => [$zoneThreeMock],
                 [$zoneThreeMock] => [],
@@ -132,7 +132,7 @@ final class ZoneMatcherTest extends TestCase
         $this->zoneRepositoryMock
             ->expects(self::exactly(3))
             ->method('findByMembers')
-            ->willReturnCallback(fn(array $members) => match ($members) {
+            ->willReturnCallback(fn (array $members) => match ($members) {
                 [$zoneOneMock] => [$zoneTwoMock],
                 [$zoneTwoMock] => [$zoneThreeMock],
                 [$zoneThreeMock] => [],
